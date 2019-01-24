@@ -11,7 +11,7 @@ setup (
            'TLSSigAPI'
            ],
        install_requires=[
-           'ecdsa',
+           'pyOpenSSL',
            ],
 
        url='https://github.com/tencentyun/tls-sig-api-python',
