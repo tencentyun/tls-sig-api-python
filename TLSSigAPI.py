@@ -34,16 +34,18 @@ def get_prime256v1():
 
 def base64_encode_url(data):
     base64_data = base64.b64encode(data)
-    base64_data = base64_data.replace('+', '*')
-    base64_data = base64_data.replace('/', '-')
-    base64_data = base64_data.replace('=', '_')
-    return base64_data
+    base64_data_str = bytes.decode(base64_data);
+    base64_data_str = base64_data_str.replace('+', '*')
+    base64_data_str = base64_data_str.replace('/', '-')
+    base64_data_str = base64_data_str.replace('=', '_')
+    return base64_data_str
 
 def base64_decode_url(base64_data):
-    base64_data = base64_data.replace('*', '+')
-    base64_data = base64_data.replace('-', '/')
-    base64_data = base64_data.replace('_', '=')
-    raw_data = base64.b64decode(base64_data)
+    base64_data_str = bytes.decode(base64_data);
+    base64_data_str = base64_data_str.replace('*', '+')
+    base64_data_str = base64_data_str.replace('-', '/')
+    base64_data_str = base64_data_str.replace('_', '=')
+    raw_data = base64.b64decode(base64_data_str)
     return raw_data
 
 class TLSSigAPI:
@@ -112,9 +114,9 @@ class TLSSigAPI:
         pk_loaded = self.__get_pri_key()
         sig_field = OpenSSL.crypto.sign(pk_loaded, fix_str, "sha256");
         sig_field_base64 = base64.b64encode(sig_field)
-        m["TLS.sig"] = sig_field_base64
+        m["TLS.sig"] = bytes.decode(sig_field_base64)
         json_str = json.dumps(m)
-        sig_cmpressed = zlib.compress(json_str)
+        sig_cmpressed = zlib.compress(json_str.encode())
         base64_sig = base64_encode_url(sig_cmpressed)
         return base64_sig
 		
@@ -136,7 +138,7 @@ class TLSSigAPI:
 
 def main():
     api = TLSSigAPI(1400000000, ecdsa_pri_key, ecdsa_pub_key)
-    sig = api.tls_gen_sig("xiaojun")
+    sig = api.gen_sig("xiaojun")
     print(sig)
 
 
