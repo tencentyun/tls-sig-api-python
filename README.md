@@ -11,7 +11,7 @@ import TLSSigAPI
 
 
 api = TLSSigAPI.TLSSigAPI(1400000000, pri_key_content, pub_key_content)
-sig = api.tls_gen_sig("xiaojun")
+sig = api.gen_sig("xiaojun")
 print(sig)
 ```
 
@@ -21,6 +21,6 @@ import TLSSigAPI
 
 
 api = TLSSigAPI.TLSSigAPI(1400000000, pri_key_content, pub_key_content)
-sig = api.tls_gen_sig("xiaojun", 24*3600*180)
+sig = api.gen_sig("xiaojun", 24*3600*180)
 print(sig)
 ```
